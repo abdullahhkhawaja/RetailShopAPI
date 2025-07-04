@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: Retail Shop API
+  description: |
+    This is a REST API for managing a retail shop, allowing customers to view products, place orders, and manage accounts. 
+    **All endpoints in this API are secured with JWT authentication**. Each endpoint requires a valid JWT token to be included in the Authorization header as a Bearer token.
+  version: 1.0.0
+  contact:
+    email: abdullahkhawaja70@gmail.com
+
+servers:
+  - url: http://localhost:8080/demo1_war_exploded/home
+    description: Local development server
+
+
+paths:
+  /login:
+    post:
+      summary: Logs the user in and generates a JWT token
+      description: This endpoint accepts a username and password and returns a JWT token with the subject as the username. The token must be used for authentication in future requests.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username of the user
+                password:
+                  type: string
+                  description: The password of the user
+      responses:
+        '200':
+          description: Login successful, JWT token returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: The generated JWT token
+        '401':
+          description: Invalid username or password
+
+  /products:
+    get:
+      summary: Fetches all products available in the shop
+      description: This endpoint returns a list of all products available in the shop, including their stock quantities and prices. **Authentication required** (JWT Bearer token).
+      operationId: GetProducts
+      responses:
+        '200':
+          description: A list of all available products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product_id:
+                      type: integer
+                      description: The unique ID of the product
+                    name:
+                      type: string
+                      description: The name of the product
+                    price:
+                      type: number
+                      format: float
+                      description: The price of the product
+                    stock_quantity:
+                      type: integer
+                      description: The quantity of the product in stock
+
+  /products/createorder:
+    post:
+      summary: Creates an order for a product
+      description: This endpoint allows a user to place an order for a product by specifying the product ID, order quantity, and username. It will also update the stock quantities accordingly. **Authentication required** (JWT Bearer token).
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  description: The ID of the product being ordered
+                orderquantity:
+                  type: integer
+                  description: The quantity of the product being ordered
+                customerusername:
+                  type: string
+                  description: The username of the customer placing the order
+      responses:
+        '200':
+          description: Order successfully created and stock updated
+        '400':
+          description: Invalid input or insufficient stock
+        '404':
+          description: Product not found
+
+  /signup:
+    post:
+      summary: Registers a new customer
+      description: This endpoint creates a new customer in the system by adding their username and password to the customer table.
+      operationId: signUpCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username of the new customer
+                password:
+                  type: string
+                  description: The password of the new customer
+      responses:
+        '201':
+          description: Customer successfully registered
+        '400':
+          description: Invalid input (e.g., username already exists)
+
+  /viewmyorders/{username}:
+    get:
+      summary: View a customer's orders
+      description: This endpoint allows a user to view all the orders placed under their username. **Authentication required** (JWT Bearer token).
+      operationId: viewOrdersByUsername
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the customer whose orders are being retrieved
+      responses:
+        '200':
+          description: A list of the customer's orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    orderid:
+                      type: integer
+                      description: The unique ID of the order
+                    productid:
+                      type: integer
+                      description: The ID of the ordered product
+                    orderquantity:
+                      type: integer
+                      description: The quantity of the product ordered
+                    customerusername:
+                      type: string
+                      description: Username of the customer
+        '404':
+          description: User not found or no orders found for the given username
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        productid:
+          type: integer
+          description: The unique ID of the product
+        productname:
+          type: string
+          description: The name of the product
+        price:
+          type: number
+          format: float
+          description: The price of the product
+        stockQuantity:
+          type: integer
+          description: The quantity of the product in stock
+
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          description: The unique ID of the order
+        productId:
+          type: integer
+          description: The ID of the ordered product
+        orderquantity:
+          type: integer
+          description: The quantity of the product ordered
+        customerusername:
+          type: string
+          description: The username of the customer who placed the order
+
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          description: The unique ID of the customer
+        username:
+          type: string
+          description: The unique username of the customer
+        password:
+          type: string
+          description: The password of the customer

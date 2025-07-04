@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "58ac183d-0398-4a2c-a824-3a00ccf840dc",
+		"name": "RetailShopAPI Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46185251"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"abdullahkhawaja\",                  //Valid Login, 200 Ok\r\n    \"password\": \"password\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/demo1_war_exploded/home/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"demo1_war_exploded",
+						"home",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products Display",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTE1MzA4OTgsInN1YiI6ImFiZHVsbGFoa2hhd2FqYSIsImlhdCI6MTc1MTUyNzI5OH0.1O9IFOSnB3ApV258JYr8LjUDu9PSzwdzK2wDu21vjE0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/demo1_war_exploded/home/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"demo1_war_exploded",
+						"home",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTE1MzA4OTgsInN1YiI6ImFiZHVsbGFoa2hhd2FqYSIsImlhdCI6MTc1MTUyNzI5OH0.1O9IFOSnB3ApV258JYr8LjUDu9PSzwdzK2wDu21vjE0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"productId\": 300,\r\n        \"orderquantity\": 500,\r\n        \"customerusername\": \"abdullahkhawaja\"\r\n    },\r\n    {\r\n        \"productId\": 4,\r\n        \"orderquantity\": 2,\r\n        \"customerusername\": \"abdullahkhawaja\"\r\n    }\r\n]\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/demo1_war_exploded/home/products/createorder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"demo1_war_exploded",
+						"home",
+						"products",
+						"createorder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View My Orders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTE1MzA4OTgsInN1YiI6ImFiZHVsbGFoa2hhd2FqYSIsImlhdCI6MTc1MTUyNzI5OH0.1O9IFOSnB3ApV258JYr8LjUDu9PSzwdzK2wDu21vjE0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/demo1_war_exploded/home/viewmyorders/abdullahkhawaja",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"demo1_war_exploded",
+						"home",
+						"viewmyorders",
+						"abdullahkhawaja"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign up ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"talalnadeem\",                             //valid signup, customer created\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/demo1_war_exploded/home/login/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"demo1_war_exploded",
+						"home",
+						"login",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
